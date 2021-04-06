@@ -1,0 +1,114 @@
+[
+  {
+    "link_type": "ethernet",
+    "nodes": [
+      {
+        "adapter_number": 2,
+        "node_id": "kommutator1",
+        "port_number": 0
+      },
+      {
+        "adapter_number": 2,
+        "node_id": "kommutator2",
+        "port_number": 0
+      }
+    ],
+    "suspend": false
+  },
+  {
+    "link_type": "ethernet",
+    "nodes": [
+      {
+        "adapter_number": 3,
+        "node_id": "kommutator1",
+        "port_number": 0
+      },
+      {
+        "adapter_number": 3,
+        "node_id": "kommutator2",
+        "port_number": 0
+      }
+    ],
+    "suspend": false
+  },
+  {
+    "link_type": "ethernet",
+    "nodes": [
+      {
+        "adapter_number": 0,
+        "node_id": "kommutator1",
+        "port_number": 0
+      },
+      {
+        "adapter_number": 0,
+        "node_id": "Switch1",
+        "port_number": 0
+      }
+    ],
+    "suspend": false
+  },
+  {
+    "link_type": "ethernet",
+    "nodes": [
+      {
+        "adapter_number": 0,
+        "node_id": "Switch1",
+        "port_number": 1
+      },
+      {
+        "adapter_number": 0,
+        "node_id": "kommutator2",
+        "port_number": 0
+      }
+    ],
+    "suspend": false
+  },
+  {
+    "link_type": "ethernet",
+    "nodes": [
+      {
+        "adapter_number": 0,
+        "node_id": "Switch1",
+        "port_number": 3
+      },
+      {
+        "adapter_number": 0,
+        "node_id": "kommutator3",
+        "port_number": 0
+      }
+    ],
+    "suspend": false
+  },
+  {
+    "link_type": "ethernet",
+    "nodes": [
+      {
+        "adapter_number": 4,
+        "node_id": "kommutator3",
+        "port_number": 0
+      },
+      {
+        "adapter_number": 4,
+        "node_id": "kommutator1",
+        "port_number": 0
+      }
+    ],
+    "suspend": false
+  },
+  {
+    "link_type": "ethernet",
+    "nodes": [
+      {
+        "adapter_number": 0,
+        "node_id": "Switch1",
+        "port_number": 2
+      },
+      {
+        "adapter_number": 0,
+        "node_id": "Cloud1",
+        "port_number": 0
+      }
+    ],
+    "suspend": false
+  }
+]

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
+</head>
+<body>
+<div class="main">
+    <div id="loading" class="loadingIcon" style="visibility: hidden;">
+      <img src="{{url_for('static', filename='loading-83.gif')}}" alt="" style="height: 150px;margin: auto;display: block;"><h2>Иду собирать проект GNS3</h2>
+      <h3>(Загрузка файлов)</h3>
+    </div>
+    <h1>Генерация проекта GNS3</h1>
+    <h2>Наименование проекта GNS3: <span style="text-decoration: underline;">autobuild</span></h2>
+    <h2>IP сервера GNS3: <span style="text-decoration: underline;">172.18.107.72</span></h2>
+    <h3>Для генерации стандартного проекта на основе конкретной прошивки необходимо: <br>
+        1. Загрузить файл прошивки в формате .bz2 по нажатию кнопки "Выберите файл" <br>
+        2. Нажать кнопку "Сгенерировать проект" и дождаться окончания загрузки <br><br>
+        * перед генерацией проекта следует убедиться в отсутствии устройств с именем из списка зарезервированных имен:<br>
+        knos1 , knos2 , knos3 , Cloud1 , Switch1 <br>
+        не стоит удалять проект, необходимо удалить только ноды с зарезервированным именем
+    </h3>
+    <form method="post" enctype="multipart/form-data">
+        <div class="file_button">
+            <input id="file_button" type="file"  title="Загрузить" name="file" accept=".bz2">
+        </div>
+        <div style="margin: 0 auto;width: fit-content;">
+          <input class="generate_button" type="submit" value="Сгенерировать проект" onclick="startLoading()">
+        </div>
+    </form>
+</div>
+<script>
+function startLoading() {
+  loading = document.getElementById('loading');
+  loading.style.visibility = 'unset';
+}
+</script>
+</body>
+</html>

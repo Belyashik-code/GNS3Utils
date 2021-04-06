@@ -1,0 +1,175 @@
+[
+	{
+		"name": "kommutator1",
+		"compute_id": "local",
+		"node_type": "qemu",
+		"width": 66,
+		"x": -391,
+		"y": 128,
+		"z": 1,
+		"symbol": ":/symbols/classic/edge_label_switch_router.svg",
+		"properties": {
+			"hda_disk_image": "kommutator.hdddirect",
+			"hda_disk_interface": "sata",
+			"adapters": 8,
+			"ram": 2048,
+			"qemu_path": "/some/path/qemu-system-x86_64"
+		}
+	},
+	{
+		"name": "kommutator2",
+		"compute_id": "local",
+		"node_type": "qemu",
+		"width": 66,
+		"x": -98,
+		"y": 128,
+		"z": 1,
+		"symbol": ":/symbols/classic/edge_label_switch_router.svg",
+		"properties": {
+			"hda_disk_image": "kommutator.hdddirect",
+			"hda_disk_interface": "sata",
+			"adapters": 8,
+			"ram": 2048,
+			"qemu_path": "/some/path/qemu-system-x86_64"
+		}
+	},
+	{
+		"name": "kommutator3",
+		"compute_id": "local",
+		"node_type": "qemu",
+		"width": 66,
+		"x": -711,
+		"y": 128,
+		"z": 1,
+		"symbol": ":/symbols/classic/edge_label_switch_router.svg",
+		"properties": {
+			"hda_disk_image": "kommutator.hdddirect",
+			"hda_disk_interface": "sata",
+			"adapters": 8,
+			"ram": 2048,
+			"qemu_path": "/some/path/qemu-system-x86_64"
+		}
+	},
+	{
+		"command_line": null,
+		"compute_id": "local",
+		"console": 5015,
+		"console_auto_start": false,
+		"console_host": "0.0.0.0",
+		"console_type": "none",
+		"custom_adapters": [],
+		"first_port_name": null,
+		"height": 32,
+		"locked": false,
+		"name": "Switch1",
+		"node_directory": null,
+		"node_type": "ethernet_switch",
+		"port_name_format": "Ethernet{0}",
+		"properties": {
+			"ports_mapping": [
+				{
+					"name": "Ethernet0",
+					"port_number": 0,
+					"type": "access",
+					"vlan": 1
+				},
+				{
+					"name": "Ethernet1",
+					"port_number": 1,
+					"type": "access",
+					"vlan": 1
+				},
+				{
+					"name": "Ethernet2",
+					"port_number": 2,
+					"type": "access",
+					"vlan": 1
+				},
+				{
+					"name": "Ethernet3",
+					"port_number": 3,
+					"type": "access",
+					"vlan": 1
+				},
+				{
+					"name": "Ethernet4",
+					"port_number": 4,
+					"type": "access",
+					"vlan": 1
+				},
+				{
+					"name": "Ethernet5",
+					"port_number": 5,
+					"type": "access",
+					"vlan": 1
+				},
+				{
+					"name": "Ethernet6",
+					"port_number": 6,
+					"type": "access",
+					"vlan": 1
+				},
+				{
+					"name": "Ethernet7",
+					"port_number": 7,
+					"type": "access",
+					"vlan": 1
+				}
+			]
+		},
+		"symbol": ":/symbols/ethernet_switch.svg",
+		"width": 72,
+		"x": -397,
+		"y": -41,
+		"z": 1
+	},
+	{
+		"compute_id": "local",
+		"height": 71,
+		"name": "Cloud1",
+		"node_type": "cloud",
+		"port_name_format": "Ethernet{0}",
+		"port_segment_size": 0,
+		"properties": {
+			"interfaces": [
+				{
+					"name": "eth0",
+					"special": false,
+					"type": "ethernet"
+				},
+				{
+					"name": "lo",
+					"special": true,
+					"type": "ethernet"
+				},
+				{
+					"name": "virbr0",
+					"special": true,
+					"type": "ethernet"
+				},
+				{
+					"name": "virbr0-nic",
+					"special": true,
+					"type": "ethernet"
+				}
+			],
+			"ports_mapping": [
+				{
+					"interface": "eth0",
+					"name": "eth0",
+					"port_number": 0,
+					"type": "ethernet"
+				}
+			],
+			"remote_console_host": "",
+			"remote_console_http_path": "/",
+			"remote_console_port": 23,
+			"remote_console_type": "none"
+		},
+		"symbol": ":/symbols/cloud.svg",
+		"width": 159,
+		"x": -445,
+		"y": -297,
+		"z": 1
+	}
+]
