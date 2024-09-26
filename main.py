@@ -1,32 +1,12 @@
-import gns3apimanagement.gns3apimanagement as gns
-import json
-import re
-import tarfile
-import bz2
-import paramiko
-import shutil
-import config
-import os
-import argparse
 import time
-import subprocess
-import sys
-from flask import Flask
-app = Flask(__name__)
-import web_app.routes as routes
 
+from gns3apimanagement.gns3apimanagement import GNS3APIManager
 
-# /-/-/-/-/-/-/-/-/-/-/-/-/-/-/
-# preparing step
+gns3 = GNS3APIManager('192.168.1.69', 80)
 
-# /-/-/-/-/-/-/-/-/-/-/-/-/-/-/
-# running script step
-
-# получение полного пути до папки с файлом main.py
-path_root = f'{os.path.abspath(os.path.dirname(sys.argv[0]))}'
-
-
-# инсталяция необходимых pip
-
-# /-/-/-/-/-/-/-/-/-/-/-/-/-/-/
-
+gns3.projects.create_project("Test")
+gns3.projects.get_project_by_name("Test")
+new_name = gns3.projects.duplicate_project_by_name("Test")['name']
+time.sleep(5)
+gns3.projects.delete_project_by_name("Test")
+gns3.projects.delete_project_by_name(new_name)
