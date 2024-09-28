@@ -1,2 +1,0 @@
-flask
-python-dotenv
