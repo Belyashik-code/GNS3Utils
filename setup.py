@@ -1,4 +1,7 @@
 from setuptools import setup, find_packages
+import subprocess
+
+gns3_tag_version = subprocess.run(['git', 'describe', '--tags'], stdout=subprocess.PIPE).stdout.decode("utf-8").strip()
 
 def readme():
   with open('README.md', 'r') as f:
@@ -6,7 +9,7 @@ def readme():
 
 setup(
   name='GNS3Utils',
-  version='1.0.0',
+  version=gns3_tag_version,
   author='Beliaev Aleksandr',
   author_email='belyaevaleksandr@icloud.com',
   description='This project can help you with GNS3 automation',
