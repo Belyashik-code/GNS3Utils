@@ -3,6 +3,14 @@ import subprocess
 
 gns3_tag_version = subprocess.run(['git', 'describe', '--tags'], stdout=subprocess.PIPE).stdout.decode("utf-8").strip()
 
+if "-" in gns3_tag_version:
+    # when not on tag, git describe outputs: "1.3.3-22-gdf81228"
+    # pip has gotten strict with version numbers
+    # so change it to: "1.3.3+22.git.gdf81228"
+    # See: https://peps.python.org/pep-0440/#local-version-segments
+    v,i,s = gns3_tag_version.split("-")
+    cf_remote_version = v + "+" + i + ".git." + s
+
 def readme():
   with open('README.md', 'r') as f:
     return f.read()
