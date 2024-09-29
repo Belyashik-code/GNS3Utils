@@ -51,6 +51,11 @@ class GNS3Utils:
             response = self.outer_inst.session.post(url, data=data)
             return response.json()
 
+        def get_projects(self) -> dict:
+            url = f"{self.outer_inst.get_base_url()}/projects"
+            response = self.outer_inst.session.get(url)
+            return response.json()
+
         def duplicate_project_by_id(self, project_id: str, name: str = None) -> dict:
             url = f"{self.outer_inst.get_base_url()}/projects/{project_id}/duplicate"
             data = self.get_project_by_id(project_id)
@@ -72,16 +77,12 @@ class GNS3Utils:
 
         def delete_project_by_name(self, project_name: str) -> int:
             project_id = self.get_project_by_name(project_name)["project_id"]
-            if project_id is not None:
-                return self.delete_project_by_id(project_id)
-            else:
-                return 0
+            return self.delete_project_by_id(project_id)
 
-        def get_project_by_name(self, name) -> dict:
-            url = f"{self.outer_inst.get_base_url()}/projects"
-            response = self.outer_inst.session.get(url)
-            project = next((item for item in response.json() if item["name"] == name), None)
-            return project
+        def get_project_by_name(self, name: str) -> dict:
+            projects = self.get_projects()
+            response = next((item for item in projects if item["name"] == name), None)
+            return response
 
         def get_project_by_id(self, project_id: str) -> dict:
             url = f"{self.outer_inst.get_base_url()}/projects/{project_id}"
@@ -145,11 +146,31 @@ class GNS3Utils:
             response = self.outer_inst.session.post(url)
             return response.status_code
 
+        # todo make get universal method for project name/ project id
         def get_project_node_by_id(self, project_id: str, node_id: str) -> dict:
             url = f"{self.outer_inst.get_base_url()}/projects/{project_id}/nodes/{node_id}"
             response = self.outer_inst.session.get(url)
             return response.json()
 
+        def get_project_node_by_name(self, project_id: str, name: str) -> dict:
+            project_nodes = self.get_project_nodes(project_id)
+            project_node = next((item for item in project_nodes if item["name"] == name), None)
+            return project_node
+
+        def delete_project_node_by_id(self, project_id: str, node_id: str) -> int:
+            url = f"{self.outer_inst.get_base_url()}/projects/{project_id}/nodes/{node_id}"
+            response = self.outer_inst.session.delete(url)
+            return response.status_code
+
+        def delete_project_node_by_name(self, project_id: str, name: str) -> int:
+            project_nodes = self.get_project_nodes(project_id)
+            project_node = next((item for item in project_nodes if item["name"] == name), None)
+            return self.delete_project_node_by_id(project_id, project_node["node_id"])
+
+        def get_project_node_links_by_id(self, project_id: str, node_id: str) -> list[dict]:
+            url = f"{self.outer_inst.get_base_url()}/projects/{project_id}/nodes/{node_id}/links"
+            response = self.outer_inst.session.get(url)
+            return response.json()
 
     class __Links:
 
