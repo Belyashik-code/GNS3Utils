@@ -17,7 +17,7 @@ def readme():
 
 setup(
   name='GNS3Utils',
-  version=gns3_tag_version,
+  version="1.0.1",
   author='Beliaev Aleksandr',
   author_email='belyaevaleksandr@icloud.com',
   description='This project can help you with GNS3 automation',
