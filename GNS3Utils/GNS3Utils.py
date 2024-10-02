@@ -1,5 +1,5 @@
 import json
-from typing import Union
+from typing import Union, Dict, List, Any
 from requests import Session
 from json import dumps
 import time
@@ -11,7 +11,7 @@ class GNS3Utils:
         self.server = server
         self.port = port
         self.gns3_api_version = gns3_api_version
-        self.link = f"{self.server}:{self.port}"
+        self.__link = f"{self.server}:{self.port}"
 
         self.projects = self.__Projects(self)
         self.users = self.__Users(self)
@@ -172,10 +172,72 @@ class GNS3Utils:
             response = self.outer_inst.session.get(url)
             return response.json()
 
+        def get_project_node_links_by_name(self, project_id: str, node_name: str) -> list[dict]:
+            node_id = self.get_project_node_by_name(project_id, node_name)["node_id"]
+            node_links = self.get_project_node_links_by_id(project_id, node_id)
+            return node_links
+
+        def get_project_node_ports_status_by_id(self, project_id: str, node_id: str) -> dict:
+            ports = self.get_project_node_by_id(project_id, node_id)["ports"]
+            links = self.get_project_node_links_by_id(project_id, node_id)
+            linked_adapters = []
+            free_adapters = []
+            for link in links:
+                for node in link["nodes"]:
+                    if node["node_id"] == node_id:
+                        linked_adapters.append({"adapter_number": node["adapter_number"],
+                                              "port_number": node["port_number"]})
+            for port in ports:
+                if {"adapter_number": port["adapter_number"],
+                    "port_number": port["port_number"]} not in linked_adapters:
+                    free_adapters.append({"adapter_number": port["adapter_number"],
+                                          "port_number": port["port_number"]})
+            return {"free_ports": free_adapters, "linked_ports": linked_adapters}
+
+        def get_project_node_ports_status_by_name(self, project_id: str, node_name: str) -> dict:
+            node_id = self.get_project_node_by_name(project_id, node_name)["node_id"]
+            ports_status = self.get_project_node_ports_status_by_id(project_id, node_id)
+            return ports_status
+
     class __Links:
 
         def __init__(self, outer_inst):
             self.outer_inst = outer_inst
+
+        def get_project_links_by_project_id(self, project_id: str) -> list[dict]:
+            url = f"{self.outer_inst.get_base_url()}/projects/{project_id}/links"
+            response = self.outer_inst.session.get(url)
+            return response.json()
+
+        def get_project_links_by_project_name(self, name: str) -> list[dict]:
+            project_id = self.outer_inst.projects.get_project_by_name(name)["project_id"]
+            project_links = self.get_project_links_by_project_id(project_id)
+            return project_links
+
+        def create_new_link_by_node_ids(self, project_id: str, first_node_id: str, second_node_id: str,
+                                        first_node_ports: dict = None, second_node_ports: dict = None) -> dict:
+            if first_node_ports is None and second_node_ports is None:
+                first_node_free_ports = self.outer_inst.nodes.get_project_node_ports_status_by_id(project_id, first_node_id)["free_ports"]
+                second_node_free_ports = self.outer_inst.nodes.get_project_node_ports_status_by_id(project_id, second_node_id)["free_ports"]
+                if len(first_node_free_ports) > 0 and len(second_node_free_ports) > 0:
+                    data = {"nodes": [{
+                        "node_id": first_node_id,
+                        "adapter_number": first_node_free_ports[0]["adapter_number"],
+                        "port_number": first_node_free_ports[0]["port_number"]
+                        },
+                        {
+                            "node_id": second_node_id,
+                            "adapter_number": second_node_free_ports[0]["adapter_number"],
+                            "port_number": second_node_free_ports[0]["port_number"]
+                        }
+                    ]}
+                    print(data)
+            else:
+                data = {"nodes": [first_node_ports, second_node_ports]}
+            url = f"{self.outer_inst.get_base_url()}/projects/{project_id}/links"
+            response = self.outer_inst.session.post(url, data=json.dumps(data))
+            return response.json()
+
 
 
     class __Computes:
@@ -190,4 +252,4 @@ class GNS3Utils:
 
 
     def get_base_url(self):
-        return f"http://{self.link}/{self.gns3_api_version}"
+        return f"http://{self.__link}/{self.gns3_api_version}"
